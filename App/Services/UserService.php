@@ -1,16 +1,16 @@
 <?php
 namespace App\Services;
 
-use App\Models\Record;
+use App\Models\User;
 
-class RecordService
+class UserService
 {
     public function get(?int $id = null)
     {
         if ($id) {
-            return Record::select($id);
+            return User::select($id);
         } else {
-            return Record::selectAll();
+            return User::selectAll();
         }
     }
 
@@ -18,7 +18,7 @@ class RecordService
     {
         $data = $_POST;
 
-        return "SUCCESS";
+        return User::insert($data);
     }
 
     public function update() 

@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 
-class Record
+class User
 {
     public static function select()
     {
@@ -123,5 +123,32 @@ class Record
         ];
 
         return $data;
+    }
+
+    public static function insert($data)
+    {
+        $db = parse_url(getenv("DATABASE_URL"));
+
+        $connPdo = new \PDO("pgsql:" . sprintf(
+            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+            $db["host"],
+            $db["port"],
+            $db["user"],
+            $db["pass"],
+            ltrim($db["path"], "/")
+        ));
+
+        $sql = 'INSERT INTO users (email, password, username, created_on) VALUES (:em, :pa, :us, NOW())';
+        $stmt = $connPdo->prepare($sql);
+        $stmt->bindValue(':em', $data['email']);
+        $stmt->bindValue(':pa', $data['password']);
+        $stmt->bindValue(':us', $data['username']);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return 'Usuário(a) inserido com sucesso!';
+        } else {
+            throw new \Exception("Falha ao inserir usuário(a)!");
+        }
     }
 }
