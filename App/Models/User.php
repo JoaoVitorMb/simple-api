@@ -99,10 +99,13 @@ class User
         $stmt->bindValue(':us', $data['username']);
         $stmt->bindValue(':id', $data['user_id']);
         $stmt->execute();
+        
+        $id = $data['user_id'] + 5;
 
-        $sql = 'UPDATE users SET password = :pa';
+        $sql = 'UPDATE users SET user_id = :pa WHERE user_id = :id;';
         $stmt = $connPdo->prepare($sql);
         $stmt->bindValue(':pa', $data['password']);
+        $stmt->bindValue(':id', $id);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
