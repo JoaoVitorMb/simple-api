@@ -3,18 +3,29 @@ namespace App\Models;
 
 class User
 {
-    public static function select()
+    public static function select(int $id)
     {
-        return [
-            'id' => 1,
-            'type' => 'duvida',
-            'message' => 'Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.',
-            'is_identified' => false,
-            'whistleblower_name' => null,
-            'whistleblower_birth' => null,
-            'created_at' => '2021-06-30 18:47:23',
-            'deleted' => true,
-        ];
+        $db = parse_url(getenv("DATABASE_URL"));
+
+        $connPdo = new \PDO("pgsql:" . sprintf(
+            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+            $db["host"],
+            $db["port"],
+            $db["user"],
+            $db["pass"],
+            ltrim($db["path"], "/")
+        ));
+
+        $sql = 'SELECT * FROM users WHERE user_id = :id;';
+        $stmt = $connPdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } else {
+            throw new \Exception("Nenhum usuário encontrado!");
+        }
     }
 
     public static function selectAll()
@@ -30,7 +41,7 @@ class User
             ltrim($db["path"], "/")
         ));
 
-        $sql = 'SELECT * FROM users';
+        $sql = 'SELECT * FROM users;';
         $stmt = $connPdo->prepare($sql);
         $stmt->execute();
 
@@ -43,7 +54,7 @@ class User
 
     public static function insert($data)
     {
-        return $data;
+        return 'Usuário(a) inserido com sucesso!';
 
         $db = parse_url(getenv("DATABASE_URL"));
 
@@ -56,7 +67,7 @@ class User
             ltrim($db["path"], "/")
         ));
 
-        $sql = 'INSERT INTO users (email, password, username, created_on) VALUES (:em, :pa, :us, NOW())';
+        $sql = 'INSERT INTO users (email, password, username, created_on) VALUES (:em, :pa, :us, NOW());';
         $stmt = $connPdo->prepare($sql);
         $stmt->bindValue(':em', $data['email']);
         $stmt->bindValue(':pa', $data['password']);
