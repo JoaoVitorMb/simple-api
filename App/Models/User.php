@@ -3,7 +3,7 @@ namespace App\Models;
 
 class User
 {
-    public static function select(int $id)
+    public static function select(int $id): array
     {
         $db = parse_url(getenv("DATABASE_URL"));
 
@@ -28,7 +28,7 @@ class User
         }
     }
 
-    public static function selectAll()
+    public static function selectAll(): array
     {
         $db = parse_url(getenv("DATABASE_URL"));
 
@@ -52,8 +52,10 @@ class User
         }
     }
 
-    public static function insert($data)
+    public static function insert(array $data): string
     {
+        return $data;
+        
         $db = parse_url(getenv("DATABASE_URL"));
 
         $connPdo = new \PDO("pgsql:" . sprintf(
