@@ -14,14 +14,14 @@ class UserService
         }
     }
 
-    public function post() 
+    public function post(?int $id = null)
     {
-        return User::insert($_POST);
+        return User::update($_POST);
     }
 
-    public function update() 
+    public function put()
     {
-        
+        return User::update($_POST);
     }
 
     public function delete() 

@@ -78,4 +78,37 @@ class User
             throw new \Exception("Falha ao inserir usuário(a)!");
         }
     }
+
+    public static function update(array $data): string
+    {
+        $db = parse_url(getenv("DATABASE_URL"));
+
+        $connPdo = new \PDO("pgsql:" . sprintf(
+            "host=%s;port=%s;user=%s;password=%s;dbname=%s",
+            $db["host"],
+            $db["port"],
+            $db["user"],
+            $db["pass"],
+            ltrim($db["path"], "/")
+        ));
+
+        $sql = 'UPDATE users SET email = :em, password = :pa, username = :us WHERE user_id = :id;';
+        $stmt = $connPdo->prepare($sql);
+        $stmt->bindValue(':em', $data['email']);
+        $stmt->bindValue(':pa', $data['password']);
+        $stmt->bindValue(':us', $data['username']);
+        $stmt->bindValue(':id', $data['user_id']);
+        $stmt->execute();
+
+        $sql = 'UPDATE users SET password = :pa';
+        $stmt = $connPdo->prepare($sql);
+        $stmt->bindValue(':pa', $data['password']);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            return "Usuário(a) {$data['username']} alterado com sucesso!";
+        } else {
+            throw new \Exception("Falha ao inserir usuário(a)!");
+        }
+    }
 }
