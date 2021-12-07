@@ -54,8 +54,6 @@ class User
 
     public static function insert($data)
     {
-        return 'Usuário(a) inserido com sucesso!';
-
         $db = parse_url(getenv("DATABASE_URL"));
 
         $connPdo = new \PDO("pgsql:" . sprintf(
