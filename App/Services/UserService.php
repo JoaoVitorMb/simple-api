@@ -21,16 +21,10 @@ class UserService
         return User::insert($data);
     }
 
-    public function put()
+    public function put(int $id)
     {
         $urlDecoded = urldecode(file_get_contents("php://input"));
-        $data = json_decode($urlDecoded);
-        
-        // $data["id"] = explode("=", $inputData[0])[1];
-        // $data["username"] = explode("=", $inputData[1])[1];
-        // $data["email"] = explode("=", $inputData[2])[1];
-        // $data["password"] = explode("=", $inputData[3])[1];
-        
+        $data = json_decode($urlDecoded, true);        
         return User::update($data);
     }
 
