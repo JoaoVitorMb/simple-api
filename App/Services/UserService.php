@@ -21,7 +21,7 @@ class UserService
 
     public function put()
     {
-        return $_POST;
+        return file_get_contents("php://input");
         //return User::update($_POST);
     }
 

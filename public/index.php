@@ -27,5 +27,5 @@ if ($_GET['url']) {
         }
     }
 } else {
-    echo "vs 2108.06";
+    echo "vs 2108.07";
 }
