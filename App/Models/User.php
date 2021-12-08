@@ -98,7 +98,7 @@ class User
         $stmt->bindValue(':pa', $data['password']);
         $stmt->bindValue(':us', $data['username']);
         $stmt->bindValue(':id', $data['user_id']);
-        $stmt->execute();
+        $result = $stmt->execute();
         
         $id = $data['user_id'] + 5;
 
@@ -106,10 +106,10 @@ class User
         $stmt2 = $connPdo->prepare($sql);
         $stmt2->bindValue(':pa', $data['password']);
         $stmt2->bindValue(':id', $id);
-        $stmt2->execute();
+        $result = $stmt2->execute();
 
-        if ($stmt2->rowCount() > 0) {
-            return "Usuário(a) {$data['username']} alterado com sucesso!";
+        if ($result) {
+            return "Usuário(a) alterado com sucesso!";
         } else {
             throw new \Exception("Falha na edição de usuário(a)!");
         }
