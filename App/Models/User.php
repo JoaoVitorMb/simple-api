@@ -81,6 +81,8 @@ class User
 
     public static function update(array $data): string
     {
+        return $data;
+        
         $db = parse_url(getenv("DATABASE_URL"));
 
         $connPdo = new \PDO("pgsql:" . sprintf(
