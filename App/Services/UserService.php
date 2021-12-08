@@ -16,7 +16,7 @@ class UserService
 
     public function post(?int $id = null)
     {
-        return User::update($_POST);
+        return User::insert($_POST);
     }
 
     public function put()
