@@ -27,10 +27,9 @@ class UserService
         $data["user_id"] = explode("=", $inputData[0])[1];
         $data["username"] = explode("=", $inputData[1])[1];
         $data["email"] = explode("=", $inputData[2])[1];
-        $data["pasword"] = explode("=", $inputData[3])[1];
+        $data["password"] = explode("=", $inputData[3])[1];
         
-        return $data;
-        //return User::update($data);
+        return User::update($data);
     }
 
     public function delete() 
