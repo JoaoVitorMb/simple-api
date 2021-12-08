@@ -17,19 +17,18 @@ class CompanyService
     public function post()
     {
         $urlDecoded = urldecode(file_get_contents("php://input"));
-        return $urlDecoded;
+        return json_decode($urlDecoded);
         //return Company::insert($_POST);
     }
 
     public function put(int $id)
     {
         $urlDecoded = urldecode(file_get_contents("php://input"));
-        $jsonData = json_decode($urlDecoded);
-        return $jsonData;        
+        return $id; //json_decode($urlDecoded);
         //return Company::update($data);
     }
 
-    public function delete() 
+    public function delete()
     {
         
     }

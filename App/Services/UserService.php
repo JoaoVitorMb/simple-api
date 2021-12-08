@@ -14,20 +14,22 @@ class UserService
         }
     }
 
-    public function post(?int $id = null)
+    public function post()
     {
-        return User::insert($_POST);
+        $urlDecoded = urldecode(file_get_contents("php://input"));
+        $data = json_decode($urlDecoded, true);
+        return User::insert($data);
     }
 
     public function put()
     {
         $urlDecoded = urldecode(file_get_contents("php://input"));
-        $inputData = explode("&", $urlDecoded);
+        $data = json_decode($urlDecoded);
         
-        $data["user_id"] = explode("=", $inputData[0])[1];
-        $data["username"] = explode("=", $inputData[1])[1];
-        $data["email"] = explode("=", $inputData[2])[1];
-        $data["password"] = explode("=", $inputData[3])[1];
+        // $data["id"] = explode("=", $inputData[0])[1];
+        // $data["username"] = explode("=", $inputData[1])[1];
+        // $data["email"] = explode("=", $inputData[2])[1];
+        // $data["password"] = explode("=", $inputData[3])[1];
         
         return User::update($data);
     }
