@@ -99,14 +99,6 @@ class User
         $stmt->bindValue(':us', $data['username']);
         $stmt->bindValue(':id', (int)$data['id']);
         $result = $stmt->execute();
-        
-        $id = (int)$data['id'] + 5;
-
-        $sql = 'UPDATE users SET password = :pa WHERE user_id = :id;';
-        $stmt2 = $connPdo->prepare($sql);
-        $stmt2->bindValue(':pa', $data['password']);
-        $stmt2->bindValue(':id', $id);
-        $result = $stmt2->execute();
 
         if ($result) {
             return "Usuário(a) alterado com sucesso!";
