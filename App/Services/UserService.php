@@ -21,7 +21,8 @@ class UserService
 
     public function put()
     {
-        return User::update($_POST);
+        return $_POST;
+        //return User::update($_POST);
     }
 
     public function delete() 
