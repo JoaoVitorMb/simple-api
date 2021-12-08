@@ -102,16 +102,16 @@ class User
         
         $id = $data['user_id'] + 5;
 
-        $sql = 'UPDATE users SET user_id = :pa WHERE user_id = :id;';
-        $stmt = $connPdo->prepare($sql);
-        $stmt->bindValue(':pa', $data['password']);
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
+        $sql = 'UPDATE users SET password = :pa WHERE user_id = :id;';
+        $stmt2 = $connPdo->prepare($sql);
+        $stmt2->bindValue(':pa', $data['password']);
+        $stmt2->bindValue(':id', $id);
+        $stmt2->execute();
 
-        if ($stmt->rowCount() > 0) {
+        if ($stmt2->rowCount() > 0) {
             return "Usuário(a) {$data['username']} alterado com sucesso!";
         } else {
-            throw new \Exception("Falha ao inserir usuário(a)!");
+            throw new \Exception("Falha na edição de usuário(a)!");
         }
     }
 }
